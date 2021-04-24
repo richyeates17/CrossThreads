@@ -1,0 +1,286 @@
+
+spineboy-pro.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+crosshair
+  rotate: false
+  xy: 1742, 21
+  size: 89, 89
+  orig: 89, 89
+  offset: 0, 0
+  index: -1
+eye-indifferent
+  rotate: false
+  xy: 669, 53
+  size: 93, 89
+  orig: 93, 89
+  offset: 0, 0
+  index: -1
+eye-surprised
+  rotate: false
+  xy: 348, 43
+  size: 93, 89
+  orig: 93, 89
+  offset: 0, 0
+  index: -1
+front-bracer
+  rotate: true
+  xy: 531, 3
+  size: 58, 80
+  orig: 58, 80
+  offset: 0, 0
+  index: -1
+front-fist-closed
+  rotate: true
+  xy: 1833, 13
+  size: 75, 82
+  orig: 75, 82
+  offset: 0, 0
+  index: -1
+front-fist-open
+  rotate: false
+  xy: 443, 45
+  size: 86, 87
+  orig: 86, 87
+  offset: 0, 0
+  index: -1
+front-foot
+  rotate: false
+  xy: 1406, 40
+  size: 126, 69
+  orig: 126, 69
+  offset: 0, 0
+  index: -1
+front-shin
+  rotate: true
+  xy: 1106, 61
+  size: 82, 184
+  orig: 82, 184
+  offset: 0, 0
+  index: -1
+front-thigh
+  rotate: true
+  xy: 937, 20
+  size: 45, 112
+  orig: 45, 112
+  offset: 0, 0
+  index: -1
+front-upper-arm
+  rotate: true
+  xy: 764, 12
+  size: 46, 97
+  orig: 46, 97
+  offset: 0, 0
+  index: -1
+goggles
+  rotate: false
+  xy: 1602, 145
+  size: 261, 166
+  orig: 261, 166
+  offset: 0, 0
+  index: -1
+gun
+  rotate: true
+  xy: 1335, 188
+  size: 210, 203
+  orig: 210, 203
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 1035, 127
+  size: 271, 298
+  orig: 271, 298
+  offset: 0, 0
+  index: -1
+hoverboard-board
+  rotate: false
+  xy: 1540, 246
+  size: 492, 152
+  orig: 492, 152
+  offset: 0, 0
+  index: -1
+hoverboard-thruster
+  rotate: true
+  xy: 1222, 3
+  size: 60, 64
+  orig: 60, 64
+  offset: 0, 0
+  index: -1
+hoverglow-small
+  rotate: false
+  xy: 1292, 111
+  size: 274, 75
+  orig: 274, 75
+  offset: 0, 0
+  index: -1
+mouth-grind
+  rotate: false
+  xy: 113, 22
+  size: 93, 59
+  orig: 93, 59
+  offset: 0, 0
+  index: -1
+mouth-oooo
+  rotate: true
+  xy: 1982, 95
+  size: 93, 59
+  orig: 93, 59
+  offset: 0, 0
+  index: -1
+mouth-smile
+  rotate: false
+  xy: 1500, 8
+  size: 93, 59
+  orig: 93, 59
+  offset: 0, 0
+  index: -1
+muzzle-glow
+  rotate: false
+  xy: 1995, 348
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+muzzle-ring
+  rotate: true
+  xy: 2, 83
+  size: 49, 209
+  orig: 49, 209
+  offset: 0, 0
+  index: -1
+muzzle01
+  rotate: false
+  xy: 534, 63
+  size: 133, 79
+  orig: 133, 79
+  offset: 0, 0
+  index: -1
+muzzle02
+  rotate: false
+  xy: 937, 67
+  size: 135, 81
+  orig: 135, 84
+  offset: 0, 3
+  index: -1
+muzzle03
+  rotate: false
+  xy: 1865, 190
+  size: 160, 98
+  orig: 166, 106
+  offset: 4, 5
+  index: -1
+muzzle04
+  rotate: false
+  xy: 786, 60
+  size: 149, 88
+  orig: 149, 90
+  offset: 0, 2
+  index: -1
+muzzle05
+  rotate: false
+  xy: 213, 59
+  size: 133, 73
+  orig: 135, 75
+  offset: 0, 1
+  index: -1
+neck
+  rotate: false
+  xy: 1285, 357
+  size: 35, 41
+  orig: 36, 41
+  offset: 0, 0
+  index: -1
+portal-bg
+  rotate: false
+  xy: 2, 134
+  size: 264, 264
+  orig: 266, 266
+  offset: 1, 1
+  index: -1
+portal-flare1
+  rotate: false
+  xy: 2, 23
+  size: 109, 58
+  orig: 111, 60
+  offset: 1, 1
+  index: -1
+portal-flare2
+  rotate: false
+  xy: 1292, 50
+  size: 112, 59
+  orig: 114, 61
+  offset: 1, 1
+  index: -1
+portal-flare3
+  rotate: false
+  xy: 1926, 36
+  size: 113, 57
+  orig: 115, 59
+  offset: 1, 1
+  index: -1
+portal-shade
+  rotate: false
+  xy: 268, 134
+  size: 264, 264
+  orig: 266, 266
+  offset: 1, 1
+  index: -1
+portal-streaks1
+  rotate: false
+  xy: 534, 144
+  size: 250, 254
+  orig: 252, 256
+  offset: 1, 1
+  index: -1
+portal-streaks2
+  rotate: true
+  xy: 786, 150
+  size: 248, 247
+  orig: 250, 249
+  offset: 1, 1
+  index: -1
+rear-bracer
+  rotate: true
+  xy: 863, 3
+  size: 55, 70
+  orig: 56, 72
+  offset: 0, 2
+  index: -1
+rear-foot
+  rotate: 180
+  xy: 1107, 17
+  size: 113, 60
+  orig: 113, 60
+  offset: 0, 0
+  index: -1
+rear-shin
+  rotate: true
+  xy: 1568, 69
+  size: 74, 172
+  orig: 75, 178
+  offset: 1, 4
+  index: -1
+rear-thigh
+  rotate: true
+  xy: 1595, 12
+  size: 55, 94
+  orig: 55, 94
+  offset: 0, 0
+  index: -1
+rear-upper-arm
+  rotate: false
+  xy: 1035, 311
+  size: 40, 87
+  orig: 40, 87
+  offset: 0, 0
+  index: -1
+torso
+  rotate: true
+  xy: 1800, 90
+  size: 98, 180
+  orig: 98, 180
+  offset: 0, 0
+  index: -1
