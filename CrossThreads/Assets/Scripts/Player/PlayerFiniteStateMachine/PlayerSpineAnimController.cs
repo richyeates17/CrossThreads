@@ -10,6 +10,9 @@ public class PlayerSpineAnimController : MonoBehaviour
     public AnimationReferenceAsset run;
     public AnimationReferenceAsset jump;
     public AnimationReferenceAsset land;
+    public AnimationReferenceAsset wallSlide;
+    public AnimationReferenceAsset wallGrab;
+    public AnimationReferenceAsset wallClimb;
     public string currentState;
     public string currentAnimation;
     public string endedAnimation;
@@ -47,6 +50,20 @@ public class PlayerSpineAnimController : MonoBehaviour
             SetAnimation(land, loop, 1f);
         }
 
+        if (state == "wallSlide")
+        {
+            SetAnimation(wallSlide, loop, 1f);
+        }
+
+        if (state == "wallGrab")
+        {
+            SetAnimation(wallGrab, loop, 1f);
+        }
+
+        if (state == "wallClimb")
+        {
+            SetAnimation(wallClimb, loop, 1f);
+        }
         currentAnimation = state;
     }
 
