@@ -15,6 +15,9 @@ MonoBehaviour:
   movementVelocity: 20
   jumpVelocity: 50
   amountOfJumps: 1
+  wallJumpVelocity: 50
+  wallJumpTime: 0.4
+  wallJumpAngle: {x: 1, y: 2}
   coyoteTime: 0.2
   variableJumpHeightMulitplier: 0.5
   wallSlideVelocity: 10
