@@ -13,6 +13,8 @@ public class PlayerSpineAnimController : MonoBehaviour
     public AnimationReferenceAsset wallSlide;
     public AnimationReferenceAsset wallGrab;
     public AnimationReferenceAsset wallClimb;
+    public AnimationReferenceAsset ledgeGrab;
+    public AnimationReferenceAsset ledgeClimb;
     public string currentState;
     public string currentAnimation;
     public string endedAnimation;
@@ -64,6 +66,17 @@ public class PlayerSpineAnimController : MonoBehaviour
         {
             SetAnimation(wallClimb, loop, 1f);
         }
+
+        if (state == "ledgeGrab")
+        {
+            SetAnimation(ledgeGrab, loop, 1f);
+        }
+
+        if (state == "ledgeClimb")
+        {
+            SetAnimation(ledgeClimb, loop, 1f);
+        }
+
         currentAnimation = state;
     }
 

@@ -22,6 +22,8 @@ MonoBehaviour:
   variableJumpHeightMulitplier: 0.5
   wallSlideVelocity: 10
   wallClimbVelocity: 10
+  startOffset: {x: 0.5, y: 6.2}
+  stopOffset: {x: 1.5, y: 0}
   groundCheckRadius: 0.6
   whatIsGround:
     serializedVersion: 2
