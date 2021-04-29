@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     private Transform ledgeCheck;
     [SerializeField]
     private Transform ceilingCheck;
+    [SerializeField]
+    private Transform slopeCheck;
     #endregion
 
     #region Components
@@ -48,8 +50,20 @@ public class Player : MonoBehaviour
     public Vector2 CurrentVelocity { get; private set; }
     public int FacingDirection { get; private set; }
     public bool isHanging;
+    public float slopeSideAngle;
+    public bool isOnSlope;
+    public bool canWalkOnSlope;
 
+    private Vector2 slopeNormalPerp;
+    private float slopeDownAngleOld;
+    private float slopeDownAngle;
+    private float startTime;
+    private bool jumpOffSlope;
     private Vector2 workspace;
+    [SerializeField]
+    PhysicsMaterial2D playerMat;
+    [SerializeField]
+    PhysicsMaterial2D fullFriction;
     #endregion
 
     #region Unity Callback Functions
@@ -103,6 +117,10 @@ public class Player : MonoBehaviour
     {
         CurrentVelocity = RB.velocity;
         StateMachine.CurrentState.LogicUpdate();
+
+        CheckIfOnSlopeHorizontal();
+        CheckIfOnSlopeVertical();
+        ResetJumpOffSlopeAfterTime();
     }
 
     private void FixedUpdate()
@@ -136,7 +154,15 @@ public class Player : MonoBehaviour
 
     public void SetVelocityX(float velocity)
     {
-        workspace.Set(velocity, CurrentVelocity.y);
+        if (isOnSlope && canWalkOnSlope && CheckIfGrounded() && !jumpOffSlope)
+        {
+            workspace.Set((-velocity * slopeNormalPerp.x), (slopeNormalPerp.y * -velocity));
+        }
+        else
+        {
+            workspace.Set(velocity, CurrentVelocity.y);
+        }
+
         RB.velocity = workspace;
         CurrentVelocity = workspace;
     }
@@ -183,9 +209,93 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
+
+    //handle slopes
+
+    public void CheckIfOnSlopeHorizontal()
+    {
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(slopeCheck.position, Vector2.right * FacingDirection, playerData.slopeCheckDistance, playerData.whatIsGround);
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(slopeCheck.position, Vector2.right * -FacingDirection, playerData.slopeCheckDistance, playerData.whatIsGround);
+
+        if (slopeHitFront)
+        {
+            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+            isOnSlope = true;
+        }
+        else if (slopeHitBack)
+        {
+            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+            isOnSlope = true;
+        }
+        else
+        {
+            slopeSideAngle = 0.0f;
+            isOnSlope = false;
+        }
+    }
+
+    public void CheckIfOnSlopeVertical()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(slopeCheck.position, Vector2.down, playerData.slopeCheckDistance, playerData.whatIsGround);
+
+        if (hit)
+        {
+            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+
+            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (slopeDownAngle != slopeDownAngleOld)
+            {
+                isOnSlope = true;
+            }
+
+            slopeDownAngleOld = slopeDownAngle;
+
+            Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+
+            if (slopeDownAngle > playerData.maxSlopeAngle || slopeSideAngle > playerData.maxSlopeAngle)
+            {
+                canWalkOnSlope = false;
+            }
+            else
+            {
+                canWalkOnSlope = true;
+            }
+
+            SetPhysicsMaterial();
+        }
+    }
     #endregion
 
     #region Other Functions
+
+    public void JumpOffSlope ()
+    {
+        startTime = Time.time;
+        isOnSlope = false;
+        jumpOffSlope = true;
+    }
+
+    private void ResetJumpOffSlopeAfterTime()
+    {
+        if (jumpOffSlope && Time.time > startTime + 0.2f)
+        {
+            jumpOffSlope = false;
+        }
+    }
+
+    public void SetPhysicsMaterial()
+    {
+        if (isOnSlope && canWalkOnSlope && InputHandler.NormInputX == 0f)
+        {
+            RB.sharedMaterial = fullFriction;
+        }
+        else
+        {
+            RB.sharedMaterial = playerMat;
+        }
+    }
 
     public void SetColliderHeight(float height)
     {
