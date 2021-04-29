@@ -24,6 +24,17 @@ MonoBehaviour:
   wallClimbVelocity: 10
   startOffset: {x: 0.5, y: 6.2}
   stopOffset: {x: 1.5, y: 0}
+  dashCooldown: 0.5
+  maxHoldTime: 1
+  holdTimeScale: 0.25
+  dashTime: 0.2
+  dashVelocity: 80
+  drag: 10
+  dashEndYMultiplier: 0.2
+  distanceBetweenAfterImages: 0.5
+  crouchMovementVelocity: 10
+  crouchColliderHeight: 3.1
+  standColliderHeight: 6.2
   groundCheckRadius: 0.6
   whatIsGround:
     serializedVersion: 2

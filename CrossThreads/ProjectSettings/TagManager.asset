@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - Ground
+  - 
+  - 
+  - 
+  - Player Effects Behind
   - Player
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player Behind
+    uniqueID: 1284894547
+    locked: 0
+  - name: Player
+    uniqueID: 649856629
     locked: 0
