@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; } 
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
+    public PlayerOnRopeState RopeState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -65,6 +66,9 @@ public class Player : MonoBehaviour
     PhysicsMaterial2D playerMat;
     [SerializeField]
     PhysicsMaterial2D fullFriction;
+
+    // Declare the bool that checks if the player is already attached to a rope
+    [HideInInspector] public bool alreadyConnected = false;
     #endregion
 
     #region Unity Callback Functions
@@ -85,6 +89,7 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
+        RopeState = new PlayerOnRopeState(this, StateMachine, playerData, "onRope");
     }
 
     private void Start()

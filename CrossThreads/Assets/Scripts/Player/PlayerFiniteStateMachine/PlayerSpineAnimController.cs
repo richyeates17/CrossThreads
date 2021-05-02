@@ -17,6 +17,7 @@ public class PlayerSpineAnimController : MonoBehaviour
     public AnimationReferenceAsset ledgeClimb;
     public AnimationReferenceAsset crouchIdle;
     public AnimationReferenceAsset crouchMove;
+    public AnimationReferenceAsset onRope;
     public string currentState;
     public string currentAnimation;
     public string endedAnimation;
@@ -87,6 +88,11 @@ public class PlayerSpineAnimController : MonoBehaviour
         if (state == "crouchMove")
         {
             SetAnimation(crouchMove, loop, 1f);
+        }
+
+        if (state == "onRope")
+        {
+            SetAnimation(onRope, loop, 1f);
         }
 
         currentAnimation = state;
