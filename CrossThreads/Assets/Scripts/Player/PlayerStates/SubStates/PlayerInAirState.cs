@@ -19,6 +19,7 @@ public class PlayerInAirState : PlayerState
     private bool isTouchingWallBack;
     private bool oldIsTouchingWall;
     private bool oldIsTouchingWallBack;
+    private bool isOnSlope;
 
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
@@ -40,6 +41,7 @@ public class PlayerInAirState : PlayerState
         isTouchingWall = player.CheckIfTouchingWall();
         isTouchingWallBack = player.CheckIfTouchingWallBack();
         isTouchingLedge = player.CheckIfTouchingLedge();
+        isOnSlope = player.isOnSlope;
 
         if (isTouchingWall && !isTouchingLedge)
         {
@@ -81,7 +83,7 @@ public class PlayerInAirState : PlayerState
 
         CheckJumpMulitplier();
 
-        if (isGrounded && player.CurrentVelocity.y < 0.01f)
+        if ((isGrounded || isOnSlope) && player.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
@@ -117,7 +119,11 @@ public class PlayerInAirState : PlayerState
         {
             player.CheckIfShouldFlip(xInput);
             //NOTE - modify here if we want to change movement speed during jump
-            player.SetVelocityX(playerData.movementVelocity * xInput);
+            if (player.canWalkOnSlope)
+            {
+                player.SetVelocityX(playerData.movementVelocity * xInput);
+            }
+
         }
     }
 

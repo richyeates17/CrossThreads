@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public Transform DashDirectionIndicator { get; private set; }
-    public BoxCollider2D MovementCollider { get; private set; }
+    public CapsuleCollider2D MovementCollider { get; private set; }
     #endregion
 
     #region Other Variables
@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     public float slopeSideAngle;
     public bool isOnSlope;
     public bool canWalkOnSlope;
+    public bool isOnGround;
 
     private Vector2 slopeNormalPerp;
     private float slopeDownAngleOld;
@@ -93,7 +94,7 @@ public class Player : MonoBehaviour
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
-        MovementCollider = GetComponent<BoxCollider2D>();
+        MovementCollider = GetComponent<CapsuleCollider2D>();
 
         FacingDirection = 1;
 
@@ -121,10 +122,12 @@ public class Player : MonoBehaviour
         CheckIfOnSlopeHorizontal();
         CheckIfOnSlopeVertical();
         ResetJumpOffSlopeAfterTime();
+
     }
 
     private void FixedUpdate()
     {
+        SetPhysicsMaterial();
         StateMachine.CurrentState.PhysicsUpdate();
     }
     #endregion
@@ -157,14 +160,15 @@ public class Player : MonoBehaviour
         if (isOnSlope && canWalkOnSlope && CheckIfGrounded() && !jumpOffSlope)
         {
             workspace.Set((-velocity * slopeNormalPerp.x), (slopeNormalPerp.y * -velocity));
+            RB.velocity = workspace;
+            CurrentVelocity = workspace;
         }
-        else
+        else if (canWalkOnSlope)
         {
             workspace.Set(velocity, CurrentVelocity.y);
+            RB.velocity = workspace;
+            CurrentVelocity = workspace;
         }
-
-        RB.velocity = workspace;
-        CurrentVelocity = workspace;
     }
 
     public void SetVelocityY(float velocity)
@@ -217,12 +221,12 @@ public class Player : MonoBehaviour
         RaycastHit2D slopeHitFront = Physics2D.Raycast(slopeCheck.position, Vector2.right * FacingDirection, playerData.slopeCheckDistance, playerData.whatIsGround);
         RaycastHit2D slopeHitBack = Physics2D.Raycast(slopeCheck.position, Vector2.right * -FacingDirection, playerData.slopeCheckDistance, playerData.whatIsGround);
 
-        if (slopeHitFront)
+        if (slopeHitFront && !(CheckIfTouchingWall() || CheckIfTouchingWallBack()))
         {
             slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
             isOnSlope = true;
         }
-        else if (slopeHitBack)
+        else if (slopeHitBack && !(CheckIfTouchingWall() || CheckIfTouchingWallBack()))
         {
             slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
             isOnSlope = true;
@@ -244,7 +248,7 @@ public class Player : MonoBehaviour
 
             slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            if (slopeDownAngle != slopeDownAngleOld)
+            if (slopeDownAngle != slopeDownAngleOld && !(CheckIfTouchingWall() || CheckIfTouchingWallBack()))
             {
                 isOnSlope = true;
             }
@@ -254,7 +258,7 @@ public class Player : MonoBehaviour
             Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
 
-            if (slopeDownAngle > playerData.maxSlopeAngle || slopeSideAngle > playerData.maxSlopeAngle)
+            if (slopeDownAngle > playerData.maxSlopeAngle || slopeSideAngle > playerData.maxSlopeAngle && !(CheckIfTouchingWall() || CheckIfTouchingWallBack()))
             {
                 canWalkOnSlope = false;
             }
@@ -262,9 +266,7 @@ public class Player : MonoBehaviour
             {
                 canWalkOnSlope = true;
             }
-
-            SetPhysicsMaterial();
-        }
+         }
     }
     #endregion
 
@@ -275,6 +277,7 @@ public class Player : MonoBehaviour
         startTime = Time.time;
         isOnSlope = false;
         jumpOffSlope = true;
+        canWalkOnSlope = true;
     }
 
     private void ResetJumpOffSlopeAfterTime()
@@ -287,7 +290,7 @@ public class Player : MonoBehaviour
 
     public void SetPhysicsMaterial()
     {
-        if (isOnSlope && canWalkOnSlope && InputHandler.NormInputX == 0f)
+        if (isOnSlope)
         {
             RB.sharedMaterial = fullFriction;
         }

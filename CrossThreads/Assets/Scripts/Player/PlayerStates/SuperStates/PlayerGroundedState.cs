@@ -15,7 +15,7 @@ public class PlayerGroundedState : PlayerState
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isTouchingLedge;
-
+    private bool isOnSlope;
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -30,6 +30,7 @@ public class PlayerGroundedState : PlayerState
         isTouchingWall = player.CheckIfTouchingWall();
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingCeiling = player.CheckForCeiling();
+        isOnSlope = player.isOnSlope;
     }
 
     public override void Enter()
@@ -38,11 +39,13 @@ public class PlayerGroundedState : PlayerState
 
         player.JumpState.RestAmountOfJumpsLeft();
         player.DashState.ResetCanDash();
+        player.isOnGround = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.isOnGround = false;
     }
 
     public override void LogicUpdate()
@@ -55,11 +58,11 @@ public class PlayerGroundedState : PlayerState
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
-        if(jumpInput && player.JumpState.CanJump())
+        if(jumpInput && player.JumpState.CanJump() && player.canWalkOnSlope)
         {
             stateMachine.ChangeState(player.JumpState);
         }
-        else if(!isGrounded)
+        else if(!isGrounded && !isOnSlope)
         {
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);

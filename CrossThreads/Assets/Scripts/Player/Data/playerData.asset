@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVelocity: 20
   slopeCheckDistance: 2
-  maxSlopeAngle: 80
+  maxSlopeAngle: 60
   jumpVelocity: 50
   amountOfJumps: 1
   wallJumpVelocity: 50

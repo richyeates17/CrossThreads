@@ -7,7 +7,7 @@ public class PlayerData : ScriptableObject
 {
     [Header("Move State")]
     public float movementVelocity = 20f;
-    public float slopeCheckDistance = 1f;
+    public float slopeCheckDistance = 0.5f;
     public float maxSlopeAngle = 80f;
 
     [Header("Jump State")]
