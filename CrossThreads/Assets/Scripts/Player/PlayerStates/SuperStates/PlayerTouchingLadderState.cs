@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTouchingWallState : PlayerState
+public class PlayerTouchingLadderState : PlayerState
 {
     protected bool isGrounded;
-    protected bool isTouchingWall;
+    protected bool isTouchingLadder;
     protected bool grabInput;
     protected bool jumpInput;
     protected int xInput;
     protected int yInput;
-    protected bool isTouchingLedge;
-    protected bool isTouchingLadder;
+    protected GameObject theLadderObject;
+    protected float ladderCenter;
+    protected bool jumpingTimedown;
 
-    public PlayerTouchingWallState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerTouchingLadderState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
-
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
@@ -32,19 +32,15 @@ public class PlayerTouchingWallState : PlayerState
         base.DoChecks();
 
         isGrounded = player.CheckIfGrounded();
-        isTouchingWall = player.CheckIfTouchingWall();
-        isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingLadder = player.CheckIfTouchingLadder();
 
-        if(isTouchingWall && !isTouchingLedge)
-        {
-            player.LedgeClimbState.SetDetectedPosition(player.transform.position);
-        }
     }
 
     public override void Enter()
     {
         base.Enter();
+        theLadderObject = player.collidedLadder;
+        ladderCenter = theLadderObject.transform.position.x;
     }
 
     public override void Exit()
@@ -61,26 +57,17 @@ public class PlayerTouchingWallState : PlayerState
         grabInput = player.InputHandler.GrabInput;
         jumpInput = player.InputHandler.JumpInput;
 
-        if(jumpInput)
+        if (jumpInput)
         {
-            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            stateMachine.ChangeState(player.WallJumpState);
+            stateMachine.ChangeState(player.JumpState);
         }
         else if (isGrounded && !grabInput)
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (!isTouchingWall || (xInput != player.FacingDirection && !grabInput))
+        else if (!isTouchingLadder || !grabInput)
         {
             stateMachine.ChangeState(player.InAirState);
-        }
-        else if(!isTouchingLedge && isTouchingWall)
-        {
-            stateMachine.ChangeState(player.LedgeClimbState);
-        }
-        else if(isTouchingLadder && grabInput)
-        {
-            stateMachine.ChangeState(player.LadderGrabState);
         }
     }
 
@@ -89,3 +76,4 @@ public class PlayerTouchingWallState : PlayerState
         base.PhysicsUpdate();
     }
 }
+

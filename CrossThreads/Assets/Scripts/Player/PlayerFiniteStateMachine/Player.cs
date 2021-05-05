@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; } 
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
+    public PlayerClimbingLadderState LadderClimbState { get; private set; }
+    public PlayerGrabLadderState LadderGrabState { get; private set; }
+    public PlayerDescendLadderState LadderDescendState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -65,6 +68,8 @@ public class Player : MonoBehaviour
     PhysicsMaterial2D playerMat;
     [SerializeField]
     PhysicsMaterial2D fullFriction;
+
+    public GameObject collidedLadder;
     #endregion
 
     #region Unity Callback Functions
@@ -85,6 +90,9 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
+        LadderClimbState = new PlayerClimbingLadderState(this, StateMachine, playerData, "ladderClimb");
+        LadderDescendState = new PlayerDescendLadderState(this, StateMachine, playerData, "ladderDescend");
+        LadderGrabState = new PlayerGrabLadderState(this, StateMachine, playerData, "ladderGrab");
     }
 
     private void Start()
@@ -199,6 +207,26 @@ public class Player : MonoBehaviour
     public bool CheckIfTouchingLedge()
     {
         return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+    }
+
+    public bool CheckIfTouchingLadder()
+    {
+        RaycastHit2D hit1 = Physics2D.Raycast(ledgeCheck.position, Vector2.up, playerData.wallCheckDistance, playerData.whatisLadder);
+        Collider2D hit2 = Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatisLadder);
+        if (hit1)
+        {
+            collidedLadder = hit1.collider.gameObject;
+            return true;
+        }
+        else if (hit2)
+        {
+            collidedLadder = hit2.gameObject;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public bool CheckIfTouchingWallBack()

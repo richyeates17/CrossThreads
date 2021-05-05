@@ -16,6 +16,7 @@ public class PlayerGroundedState : PlayerState
     private bool isTouchingWall;
     private bool isTouchingLedge;
     private bool isOnSlope;
+    private bool isTouchingLadder;
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -31,6 +32,7 @@ public class PlayerGroundedState : PlayerState
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingCeiling = player.CheckForCeiling();
         isOnSlope = player.isOnSlope;
+        isTouchingLadder = player.CheckIfTouchingLadder();
     }
 
     public override void Enter()
@@ -74,6 +76,10 @@ public class PlayerGroundedState : PlayerState
         else if (dashInput && player.DashState.CheckIfCanDash())
         {
             stateMachine.ChangeState(player.DashState);
+        }
+        else if (isTouchingLadder && grabInput)
+        {
+            stateMachine.ChangeState(player.LadderGrabState);
         }
     }
 

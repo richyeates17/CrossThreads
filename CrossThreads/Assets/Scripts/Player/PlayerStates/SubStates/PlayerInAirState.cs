@@ -20,6 +20,7 @@ public class PlayerInAirState : PlayerState
     private bool oldIsTouchingWall;
     private bool oldIsTouchingWallBack;
     private bool isOnSlope;
+    private bool isTouchingLadder;
 
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
@@ -41,6 +42,7 @@ public class PlayerInAirState : PlayerState
         isTouchingWall = player.CheckIfTouchingWall();
         isTouchingWallBack = player.CheckIfTouchingWallBack();
         isTouchingLedge = player.CheckIfTouchingLedge();
+        isTouchingLadder = player.CheckIfTouchingLadder();
         isOnSlope = player.isOnSlope;
 
         if (isTouchingWall && !isTouchingLedge)
@@ -114,6 +116,10 @@ public class PlayerInAirState : PlayerState
         else if(dashInput && player.DashState.CheckIfCanDash())
         {
             stateMachine.ChangeState(player.DashState);
+        }
+        else if(isTouchingLadder && grabInput)
+        {
+            stateMachine.ChangeState(player.LadderGrabState);
         }
         else
         {

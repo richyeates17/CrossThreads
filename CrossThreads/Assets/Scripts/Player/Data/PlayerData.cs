@@ -23,6 +23,9 @@ public class PlayerData : ScriptableObject
     public float coyoteTime = 0.2f;
     public float variableJumpHeightMulitplier = 0.5f;
 
+    [Header("Ladder State")]
+    public LayerMask whatisLadder;
+
     [Header("Wall Slide State")]
     public float wallSlideVelocity = 10f;
 
