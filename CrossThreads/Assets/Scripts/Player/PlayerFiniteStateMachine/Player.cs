@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     public PlayerClimbingLadderState LadderClimbState { get; private set; }
     public PlayerGrabLadderState LadderGrabState { get; private set; }
     public PlayerDescendLadderState LadderDescendState { get; private set; }
+    public PlayerGrabRopeState RopeGrabState { get; private set; }
+    public PlayerClimbRopeState RopeClimbState { get; private set; }
+    public PlayerDescendRopeState RopeDescendState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour
     PhysicsMaterial2D fullFriction;
 
     public GameObject collidedLadder;
+    public GameObject collidedRope;
     #endregion
 
     #region Unity Callback Functions
@@ -93,6 +97,9 @@ public class Player : MonoBehaviour
         LadderClimbState = new PlayerClimbingLadderState(this, StateMachine, playerData, "ladderClimb");
         LadderDescendState = new PlayerDescendLadderState(this, StateMachine, playerData, "ladderDescend");
         LadderGrabState = new PlayerGrabLadderState(this, StateMachine, playerData, "ladderGrab");
+        RopeGrabState = new PlayerGrabRopeState(this, StateMachine, playerData, "ropeGrab");
+        RopeClimbState = new PlayerClimbRopeState(this, StateMachine, playerData, "ropeClimb");
+        RopeDescendState = new PlayerDescendRopeState(this, StateMachine, playerData, "ropeDescend");
     }
 
     private void Start()
@@ -221,6 +228,21 @@ public class Player : MonoBehaviour
         else if (hit2)
         {
             collidedLadder = hit2.gameObject;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckIfTouchingRope()
+    {
+        Collider2D hit2 = Physics2D.OverlapCircle(this.transform.position, playerData.groundCheckRadius, playerData.whatisRope);
+
+        if (hit2)
+        {
+            collidedRope = hit2.gameObject;
             return true;
         }
         else

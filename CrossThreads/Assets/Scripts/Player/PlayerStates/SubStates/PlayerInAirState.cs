@@ -21,6 +21,7 @@ public class PlayerInAirState : PlayerState
     private bool oldIsTouchingWallBack;
     private bool isOnSlope;
     private bool isTouchingLadder;
+    private bool isTouchingRope;
 
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
@@ -43,6 +44,8 @@ public class PlayerInAirState : PlayerState
         isTouchingWallBack = player.CheckIfTouchingWallBack();
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingLadder = player.CheckIfTouchingLadder();
+        isTouchingRope = player.CheckIfTouchingRope();
+
         isOnSlope = player.isOnSlope;
 
         if (isTouchingWall && !isTouchingLedge)
@@ -121,6 +124,10 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LadderGrabState);
         }
+        else if (isTouchingRope && grabInput)
+        {
+            stateMachine.ChangeState(player.RopeGrabState);
+        }
         else
         {
             player.CheckIfShouldFlip(xInput);
@@ -128,6 +135,10 @@ public class PlayerInAirState : PlayerState
             if (player.canWalkOnSlope)
             {
                 player.SetVelocityX(playerData.movementVelocity * xInput);
+            }
+            if (isGrounded)
+            {
+                stateMachine.ChangeState(player.MoveState);
             }
 
         }

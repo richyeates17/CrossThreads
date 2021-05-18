@@ -26,6 +26,12 @@ public class PlayerData : ScriptableObject
     [Header("Ladder State")]
     public LayerMask whatisLadder;
 
+    [Header("Rope State")]
+    public LayerMask whatisRope;
+    public int ropeLayerInt = 9;
+    public float swingForce = 4f;
+    public float ropeClimbSpeed = 4f;
+
     [Header("Wall Slide State")]
     public float wallSlideVelocity = 10f;
 

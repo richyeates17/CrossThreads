@@ -20,6 +20,9 @@ public class PlayerSpineAnimController : MonoBehaviour
     public AnimationReferenceAsset ladderClimb;
     public AnimationReferenceAsset ladderGrab;
     public AnimationReferenceAsset ladderDescend;
+    public AnimationReferenceAsset ropeGrab;
+    public AnimationReferenceAsset ropeClimb;
+    public AnimationReferenceAsset ropeDescend;
     public string currentState;
     public string currentAnimation;
     public string endedAnimation;
@@ -107,9 +110,23 @@ public class PlayerSpineAnimController : MonoBehaviour
             SetAnimation(ladderDescend, loop, 1f);
         }
 
+        if (state == "ropeGrab")
+        {
+            SetAnimation(ropeGrab, loop, 1f);
+        }
+
+        if (state == "ropeClimb")
+        {
+            SetAnimation(ropeClimb, loop, 1f);
+        }
+
+        if (state == "ropeDescend")
+        {
+            SetAnimation(ropeDescend, loop, 1f);
+        }
+
         currentAnimation = state;
     }
 
-    
 
 }
