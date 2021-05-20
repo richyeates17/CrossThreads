@@ -37,7 +37,7 @@ public class PlayerTouchingRopeState : PlayerState
         base.Enter();
         theRopeObject = player.collidedRope;
         player.transform.parent = theRopeObject.transform;
-        playerToPivotDirection = (player.collidedRope.transform.parent.transform.position - player.transform.position).normalized;
+        playerToPivotDirection = (theRopeObject.transform.parent.transform.position - player.transform.position).normalized;
     }
 
     public override void Exit()
@@ -50,8 +50,8 @@ public class PlayerTouchingRopeState : PlayerState
     {
         base.LogicUpdate();
 
-        player.transform.position = player.collidedRope.transform.position;
-        playerToPivotDirection = (player.collidedRope.transform.parent.transform.position - player.transform.position).normalized;
+        player.transform.position = theRopeObject.transform.position;
+        playerToPivotDirection = (theRopeObject.transform.parent.transform.position - player.transform.position).normalized;
 
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;

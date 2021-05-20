@@ -1701,11 +1701,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 923745615065632712, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -122.9
+      value: -122.18
       objectReference: {fileID: 0}
     - target: {fileID: 923745615065632712, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 107.2
+      value: 110.45
       objectReference: {fileID: 0}
     - target: {fileID: 923745615065632712, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1740,16 +1740,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923745615065632713, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
-      propertyPath: ropeLength
-      value: 20
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11550996}
     - target: {fileID: 923745615065632717, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: m_Name
-      value: Rope (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5645094255018391661, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
-      propertyPath: m_Distance
-      value: 162.44305
+      value: Rope
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}

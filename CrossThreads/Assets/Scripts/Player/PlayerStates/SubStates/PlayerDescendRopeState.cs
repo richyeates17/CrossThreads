@@ -35,9 +35,6 @@ public class PlayerDescendRopeState : PlayerTouchingRopeState
     {
         base.LogicUpdate();
 
-        DistanceJoint2D ropeDistance = theRopeObject.transform.parent.GetComponent<DistanceJoint2D>();
-       
-        ropeDistance.distance += Time.deltaTime * playerData.ropeClimbSpeed;
 
         if (yInput == 0)
         {

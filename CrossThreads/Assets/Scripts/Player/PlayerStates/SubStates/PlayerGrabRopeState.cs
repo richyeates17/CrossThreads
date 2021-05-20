@@ -6,6 +6,7 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
 {
     private Vector2 holdPosition;
     private Vector2 desiredPosition;
+    private Rigidbody2D theRopeNode;
 
     private bool areWeThereYet;
     private float swingForce;
@@ -17,7 +18,7 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
     {
         base.Enter();
         swingForce = playerData.swingForce;
-
+        theRopeNode = theRopeObject.GetComponent<Rigidbody2D>();
         HoldPosition();
 
     }
@@ -31,13 +32,9 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
     {
         base.LogicUpdate();
 
-
-        Vector2 oldVelocity = theRopeObject.GetComponent<Rigidbody2D>().velocity;
-
         if (!isExitingState)
         {
-            player.SetVelocityY(0f);
-            Rigidbody2D theRopeNode = theRopeObject.GetComponent<Rigidbody2D>();
+            HoldPosition();
 
             if (xInput < 0)
             {
@@ -60,11 +57,11 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
 
             }
 
-            if (yInput > 0)
+            if (yInput >= 1)
             {
                 stateMachine.ChangeState(player.RopeClimbState);
             }
-            else if (yInput < 0)
+            else if (yInput <= -1)
             {
                 stateMachine.ChangeState(player.RopeDescendState);
             }
