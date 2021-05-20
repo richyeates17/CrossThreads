@@ -6,7 +6,7 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
 {
     private Vector2 holdPosition;
     private Vector2 desiredPosition;
-    private Vector2 playerToPivotDirection;
+
     private bool areWeThereYet;
     private float swingForce;
 
@@ -19,7 +19,7 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
         swingForce = playerData.swingForce;
 
         HoldPosition();
-        playerToPivotDirection = (player.collidedRope.transform.parent.transform.position - player.transform.position).normalized;
+
     }
 
     public override void Exit()
@@ -30,8 +30,7 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        player.transform.position = player.collidedRope.transform.position;
-        playerToPivotDirection = (player.collidedRope.transform.parent.transform.position - player.transform.position).normalized;
+
 
         Vector2 oldVelocity = theRopeObject.GetComponent<Rigidbody2D>().velocity;
 

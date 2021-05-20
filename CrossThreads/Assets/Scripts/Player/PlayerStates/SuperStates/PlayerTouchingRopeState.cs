@@ -12,6 +12,7 @@ public class PlayerTouchingRopeState : PlayerState
     protected int yInput;
     protected GameObject theRopeObject;
     protected bool jumpingTimedown;
+    protected Vector2 playerToPivotDirection;
 
     public PlayerTouchingRopeState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -36,6 +37,7 @@ public class PlayerTouchingRopeState : PlayerState
         base.Enter();
         theRopeObject = player.collidedRope;
         player.transform.parent = theRopeObject.transform;
+        playerToPivotDirection = (player.collidedRope.transform.parent.transform.position - player.transform.position).normalized;
     }
 
     public override void Exit()
@@ -47,6 +49,9 @@ public class PlayerTouchingRopeState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        player.transform.position = player.collidedRope.transform.position;
+        playerToPivotDirection = (player.collidedRope.transform.parent.transform.position - player.transform.position).normalized;
 
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;

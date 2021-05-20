@@ -22,6 +22,15 @@ MonoBehaviour:
   wallJumpAngle: {x: 1, y: 2}
   coyoteTime: 0.2
   variableJumpHeightMulitplier: 0.5
+  whatisLadder:
+    serializedVersion: 2
+    m_Bits: 256
+  whatisRope:
+    serializedVersion: 2
+    m_Bits: 512
+  ropeLayerInt: 9
+  swingForce: 2
+  ropeClimbSpeed: 6
   wallSlideVelocity: 10
   wallClimbVelocity: 10
   startOffset: {x: 0.5, y: 6.2}

@@ -13,7 +13,6 @@ public class PlayerClimbRopeState : PlayerTouchingRopeState
     public override void Enter()
     {
         base.Enter();
-        theRopeObject = player.collidedRope;
 
     }
 
@@ -27,7 +26,7 @@ public class PlayerClimbRopeState : PlayerTouchingRopeState
     {
         base.LogicUpdate();
         DistanceJoint2D ropeDistance = theRopeObject.transform.parent.GetComponent<DistanceJoint2D>();
-        //ropeDistance.distance -= 2f;// Time.deltaTime * playerData.ropeClimbSpeed;
+        ropeDistance.distance -= Time.deltaTime * playerData.ropeClimbSpeed;
 
         if (yInput == 0)
         {
