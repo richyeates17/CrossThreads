@@ -19,8 +19,6 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
         base.Enter();
         swingForce = playerData.swingForce;
         theRopeNode = theRopeObject.GetComponent<Rigidbody2D>();
-        HoldPosition();
-
     }
 
     public override void Exit()
@@ -34,7 +32,6 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
 
         if (!isExitingState)
         {
-            HoldPosition();
 
             if (xInput < 0)
             {
@@ -55,27 +52,17 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
                 var force = perpendicularDirection * swingForce;
                 theRopeNode.AddForce(force, ForceMode2D.Force);
 
-            }
+            } 
 
             if (yInput >= 1)
             {
-                stateMachine.ChangeState(player.RopeClimbState);
+               // stateMachine.ChangeState(player.RopeClimbState);
             }
             else if (yInput <= -1)
             {
-                stateMachine.ChangeState(player.RopeDescendState);
+              //  stateMachine.ChangeState(player.RopeDescendState);
             }
         }
-
-    }
-
-    private void HoldPosition()
-    {
-
-        player.transform.position = player.collidedRope.transform.position;
-
-        player.SetVelocityX(0f);
-        player.SetVelocityY(0f);
 
     }
 
