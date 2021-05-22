@@ -5,15 +5,24 @@ using UnityEngine;
 public class Rope : MonoBehaviour
 {
     [SerializeField]
-    private GameObject player;
+    private Player player;
     public int numberOfLinks = 10;
     //[SerializeField]
     //private bool isFixedRope = true;
     [SerializeField]
     private PlayerData playerData;
 
-    public int playerPositionOnRope;
-    public int playerPositionOnRopeOld;
+    [SerializeField]
+    private float ropeUpperMass = 0.3f;
+    [SerializeField]
+    private float ropeLowerMass = 0.01f;
+    [SerializeField]
+    private float ropeUpperMaxAngle = 5f;
+    [SerializeField]
+    private float ropeLowerMaxAngle = 60f;
+
+    public int integerOfTheLinkThePlayerIsCurrentlyOn;
+    public int integerOfTheLinkThePlayerIsMovingTo;
 
     [SerializeField]
     private GameObject hook;
@@ -30,8 +39,6 @@ public class Rope : MonoBehaviour
     {
         ropePrefab = this.gameObject;
 
-        player = GameObject.FindGameObjectWithTag("Player");
-
         theRopeNodes = new List<GameObject>();
         theRopeNodesPositions = new List<Vector3>();
 
@@ -42,11 +49,15 @@ public class Rope : MonoBehaviour
         lineRenderer.endWidth = 0.2f;
 
         RenderTheLine();
+
+        integerOfTheLinkThePlayerIsCurrentlyOn = (int)Mathf.Round(numberOfLinks / 2);
+        ControlTheLinkRotationBasedOnConnectedLink();
     }
 
     // Update is called once per frame
     void Update()
     {
+        ControlTheLinkRotationBasedOnConnectedLink();
         RenderTheLine();
     }
 
@@ -65,7 +76,7 @@ public class Rope : MonoBehaviour
             aLink.layer = playerData.ropeLayerInt;
             aLink.transform.parent = this.transform;
 
-            theRopeNodes.Add(aLink);
+            theRopeNodes.Insert(i,aLink);
 
             if (i >= numberOfLinks)
             {
@@ -94,22 +105,22 @@ public class Rope : MonoBehaviour
         aLink.layer = playerData.ropeLayerInt;
         aLink.transform.parent = this.transform;
 
-        theRopeNodes.Insert(1, aLink);
-
+        theRopeNodes.Insert(0, aLink);
+    
         HingeJoint2D joint = aLink.GetComponent<HingeJoint2D>();
         joint.connectedBody = hook.GetComponent<Rigidbody2D>();
 
-        HingeJoint2D movedLinkHJ = theRopeNodes[2].GetComponent<HingeJoint2D>();
+        HingeJoint2D movedLinkHJ = theRopeNodes[1].GetComponent<HingeJoint2D>();
         movedLinkHJ.connectedBody = aLink.GetComponent<Rigidbody2D>();
         numberOfLinks++;
     }
 
     public void RemoveLink()
     {
-        GameObject removeLink = theRopeNodes[1];
-        GameObject newTopLink = theRopeNodes[2];
+        GameObject removeLink = theRopeNodes[0];
+        GameObject newTopLink = theRopeNodes[1];
          
-        theRopeNodes.RemoveAt(1);
+        theRopeNodes.RemoveAt(0);
 
         HingeJoint2D joint = newTopLink.GetComponent<HingeJoint2D>();
         joint.connectedBody = hook.GetComponent<Rigidbody2D>();
@@ -117,6 +128,62 @@ public class Rope : MonoBehaviour
         Destroy(removeLink);
 
         numberOfLinks--;
+    }
+
+    public void ControlTheLinkRotationBasedOnConnectedLink()
+    {
+        for (int i=0; i<theRopeNodes.Count; i++)
+        {
+            if (theRopeNodes[i].tag == "MoveToLink")
+            {
+                integerOfTheLinkThePlayerIsMovingTo = i;
+            }
+            if (theRopeNodes[i].tag == "CurrentLink")
+            {
+                integerOfTheLinkThePlayerIsCurrentlyOn = i;
+            }
+        }
+
+        if (integerOfTheLinkThePlayerIsMovingTo != integerOfTheLinkThePlayerIsCurrentlyOn)
+        {
+
+            theRopeNodes[integerOfTheLinkThePlayerIsCurrentlyOn].tag = "Untagged";
+            theRopeNodes[integerOfTheLinkThePlayerIsMovingTo].tag = "CurrentLink";
+            integerOfTheLinkThePlayerIsCurrentlyOn = integerOfTheLinkThePlayerIsMovingTo;
+
+            HingeJoint2D hj;
+            JointAngleLimits2D limits;
+            Rigidbody2D rb;
+
+            GameObject[] links = theRopeNodes.ToArray();
+
+            for (int i = 1; i < links.Length; i++)
+            {
+                if(i<integerOfTheLinkThePlayerIsCurrentlyOn)
+                {
+                    hj = links[i].GetComponent<HingeJoint2D>();
+                    limits = hj.limits;
+                    limits.max = -ropeLowerMaxAngle;
+                    limits.min = ropeLowerMaxAngle;
+                    hj.limits = limits;
+
+                    rb = links[i].GetComponent<Rigidbody2D>();
+                    rb.mass = ropeUpperMass;
+                } 
+                else
+                {
+                    hj = links[i].GetComponent<HingeJoint2D>();
+                    limits = hj.limits;
+                    limits.max = -ropeUpperMaxAngle;
+                    limits.min = ropeUpperMaxAngle;
+                    hj.limits = limits;
+
+                    rb = links[i].GetComponent<Rigidbody2D>();
+                    rb.mass = ropeLowerMass;
+                }
+
+            }
+        }
     }
 
 }

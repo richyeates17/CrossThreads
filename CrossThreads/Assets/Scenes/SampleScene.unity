@@ -493,7 +493,7 @@ MonoBehaviour:
   playerMat: {fileID: 6200000, guid: 3ce0462f9b8c6fe4badf7b4e1780f8c7, type: 2}
   fullFriction: {fileID: 6200000, guid: 58512f5117dc01f4594915f7abd1eb74, type: 2}
   collidedLadder: {fileID: 0}
-  collidedRope: {fileID: 0}
+  collidedRopeNode: {fileID: 0}
 --- !u!114 &11551006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1742,30 +1742,22 @@ PrefabInstance:
     - target: {fileID: 923745615065632713, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 11550996}
-    - target: {fileID: 923745615065632715, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 923745615065632717, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: m_Name
       value: Rope
       objectReference: {fileID: 0}
-    - target: {fileID: 1521860191151875954, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 1842058834425281399, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 11551005}
-    - target: {fileID: 3172422591596266149, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
+    - target: {fileID: 6676196287575193621, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
+      propertyPath: m_AngleLimits.m_LowerAngle
+      value: 60
       objectReference: {fileID: 0}
-    - target: {fileID: 3898946630173328050, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+    - target: {fileID: 6676196287575193621, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}
+      propertyPath: m_AngleLimits.m_UpperAngle
+      value: -60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d40a022df28bff246a1a4c1a376f46c2, type: 3}

@@ -18,7 +18,7 @@ public class PlayerGrabRopeState : PlayerTouchingRopeState
     {
         base.Enter();
         swingForce = playerData.swingForce;
-        theRopeNode = theRopeObject.GetComponent<Rigidbody2D>();
+        theRopeNode = theCollidedRopeLink.GetComponent<Rigidbody2D>();
     }
 
     public override void Exit()

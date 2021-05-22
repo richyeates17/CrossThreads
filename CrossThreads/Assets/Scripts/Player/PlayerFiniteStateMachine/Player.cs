@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     PhysicsMaterial2D fullFriction;
 
     public GameObject collidedLadder;
-    public GameObject collidedRope;
+    public GameObject collidedRopeNode;
     #endregion
 
     #region Unity Callback Functions
@@ -242,7 +242,7 @@ public class Player : MonoBehaviour
 
         if (hit2)
         {
-            collidedRope = hit2.gameObject;
+            collidedRopeNode = hit2.gameObject;
             return true;
         }
         else
