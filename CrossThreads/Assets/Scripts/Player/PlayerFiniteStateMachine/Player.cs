@@ -203,7 +203,16 @@ public class Player : MonoBehaviour
 
     public bool CheckIfGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+        Collider2D hit1 = Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+        Collider2D hit2 = Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsPlatform);
+        if (hit1||hit2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public bool CheckIfTouchingWall()

@@ -51,3 +51,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   wallCheckDistance: 2
+  whatIsPlatform:
+    serializedVersion: 2
+    m_Bits: 64

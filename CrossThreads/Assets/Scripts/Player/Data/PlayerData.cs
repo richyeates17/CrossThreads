@@ -61,4 +61,5 @@ public class PlayerData : ScriptableObject
     public float groundCheckRadius = 0.6f;
     public LayerMask whatIsGround;
     public float wallCheckDistance = 0.5f;
+    public LayerMask whatIsPlatform;
 }
