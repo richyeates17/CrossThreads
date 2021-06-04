@@ -7,6 +7,7 @@ TagManager:
   - Crank
   - CurrentLink
   - MoveToLink
+  - Enemy
   layers:
   - Default
   - TransparentFX
