@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     {
         GameManager.instance.ChangeScene("SandboxScene");
     }
+
     public void QuitGame()
     {
         GameManager.instance.QuitGame();

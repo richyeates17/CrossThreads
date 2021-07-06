@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
-using UnityEngine.UI;
-using UnityEngine.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +14,9 @@ public class GameManager : MonoBehaviour
     public AudioMixer audioMixer;
     public int currentGraphicQuality = 4; //Ultra
 
+    //Reference Variables
+    public string currentScene;
+    public Player currentPlayer;
 
     //Unity Functions
     private void Awake()
@@ -33,12 +35,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        
     }
 
     //SceneManagement
     public void ChangeScene(string SceneToLoad)
     {
+        currentScene = SceneToLoad;
         SceneManager.LoadScene(SceneToLoad, LoadSceneMode.Single);
     }
 
@@ -59,14 +62,39 @@ public class GameManager : MonoBehaviour
     }
 
     //Save/Load System
-    public void SaveGame()
-    {
 
+    //implement player prefs and file system saving for 10 slots
+
+    public void SaveGame(Player player, string fileName)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/" + fileName;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        SaveData data = new SaveData(player);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
     }
 
-    public void LoadGame()
+    public SaveData LoadGame(string fileName)
     {
+        string path = Application.persistentDataPath + "/" + fileName;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
 
+            SaveData data = formatter.Deserialize(stream) as SaveData;
+            stream.Close();
+
+            return data;
+        }
+        else
+        {
+            Debug.LogError("SaveData file not found in" + path);
+            return null;
+        }
     }
 
     //Audio Management
@@ -102,3 +130,4 @@ public class GameManager : MonoBehaviour
     }
 
 }
+

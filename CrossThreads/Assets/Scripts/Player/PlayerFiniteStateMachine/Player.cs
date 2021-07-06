@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.currentPlayer = this;
 
         Anim = GetComponent<PlayerSpineAnimController>();
         InputHandler = GetComponent<PlayerInputHandler>();
